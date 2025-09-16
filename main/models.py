@@ -14,7 +14,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100)  # nama item
     price = models.IntegerField()            # harga item
     description = models.TextField()         # deskripsi item
-    thumbnail = models.URLField(blank=True, null=True)  # link gambar
+    thumbnail = models.URLField()  # link gambar
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)  # kategori
     is_featured = models.BooleanField(default=False)    # status unggulan
     stock = models.PositiveIntegerField(default=0)      # stok barang
