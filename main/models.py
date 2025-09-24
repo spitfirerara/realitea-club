@@ -1,5 +1,7 @@
 import uuid
 from django.db import models
+from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 
 class Product(models.Model):
     CATEGORY_CHOICES = [
@@ -10,11 +12,12 @@ class Product(models.Model):
         ('other', 'Other'),
     ]
     
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)  # nama item
     price = models.IntegerField()            # harga item
     description = models.TextField()         # deskripsi item
-    thumbnail = models.URLField()  # link gambar
+    thumbnail = models.URLField(blank=True, null=True)  # link gambar
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)  # kategori
     is_featured = models.BooleanField(default=False)    # status unggulan
     stock = models.PositiveIntegerField(default=0)      # stok barang
@@ -25,3 +28,4 @@ class Product(models.Model):
     
     def __str__(self):
         return f"{self.name} - Rp{self.price:,}"
+    

@@ -102,8 +102,19 @@
 <a href="{% url 'main:create_product' %}">
   <button class="btn">+ Add Product</button>
 </a>
+<a href="{% url 'main:logout' %}">
+  <button>Logout</button>
+</a>
+<h5>Sesi terakhir login: {{ last_login }}</h5>
 
 <hr class="divider">
+
+<a href="?filter=all">
+    <button type="button">All Product</button>
+</a>
+<a href="?filter=my">
+    <button type="button">My Product</button>
+</a> 
 
 {% if not product_list %}
   <p>Belum ada produk pada toko realitea club.</p>
