@@ -1,11 +1,15 @@
-# TUGAS PBP
+# TUGAS INDIVIDU PBP
 Nama: Naira Ammara Putri
+
 Kelas: PBP B
+
 NPM: 2406433112
 
-## Tugas Individu 2 PBP - Implementasi Model-View-Template (MVT) pada Django
 Nama Project : Realitea Club
+
 Link PWS : https://naira-ammara-realiteaclub.pbp.cs.ui.ac.id/
+
+## Tugas Individu 2 PBP - Implementasi Model-View-Template (MVT) pada Django
 
 **1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).**
    
@@ -147,5 +151,155 @@ Screenshot Postman:
 
 • JSON ID
 <img width="1920" height="1080" alt="JSONPK png" src="https://github.com/user-attachments/assets/2b276ae5-3d0e-4b69-b06e-892d64decce8" />
+
+## Tugas Individu 4 PBP - Implementasi Autentikasi, Session, dan Cookies pada Django
+
+**1.	Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya**
+= ``AuthenticationForm`` adalah form bawaan Django yang digunakan untuk melakukan proses login user. Form ini otomatis menyediakan field username dan password, serta menangani validasi login (misal, apakah username ada di database, password yang dimasukkan sesuai, dan lain-lain).
+
+⦁	Kelebihan:
+
+      ⦁	Praktis & Cepat → tidak perlu membuat form login dari nol
+   
+      ⦁	Terintegrasi dengan sistem auth Django → langsung bekerja dengan ``authenticate()`` dan ``login()``.
+   
+      ⦁	Aman secara default → sudah menggunakan mekanisme hashing password bawaan Django.
+   
+      ⦁	Menangani validasi otomatis → misalnya jika password salah atau akun tidak ada, error akan muncul di form.
+
+⦁	Kekurangan:
+
+      ⦁	Kurang fleksibel untuk kustomisasi → misalnya ketika ingin menambahkan field lain (email, captcha, dsb) harus membuat subclass.
+   
+      ⦁	Tampilan default sederhana → biasanya tetap perlu di-styling dengan CSS/Bootstrap agar lebih bagus.
+   
+      ⦁	Tidak cocok untuk login non-standar → misalnya login via email atau OAuth (Google, GitHub, dll), perlu modifikasi tambahan.
+
+**2. Apa perbedaan antara autentikasi dan otorisasi? Bagaiamana Django mengimplementasikan kedua konsep tersebut?**
+⦁	Autentikasi (Authentication): proses memverifikasi identitas user. 
+Contoh: ketika user memasukkan username dan password di form login, sistem akan mengecek apakah data itu valid dan cocok dengan yang ada di database. Jika cocok, berarti user tersebut ada dan bisa masuk.
+
+⦁	Otorisasi (Authorization): proses menentukan hak akses setelah pengguna berhasil login. Misalnya, seorang admin bisa menambah atau menghapus data produk, tapi user biasa hanya bisa melihat produk saja.
+
+Implementasi di Django:
+⦁	Autentikasi: Django menyediakan sistem built-in, misalnya dengan AuthenticationForm, fungsi authenticate(), dan login(). Semua itu membantu memvalidasi username dan password user.
+
+⦁	Otorisasi: Django memakai decorators dan permissions. Contoh paling umum adalah @login_required untuk memastikan halaman hanya bisa diakses user yang sudah login. 
+
+**3. Apa saja kelebihan dan kekurangan session dan cookies dalam konteks menyimpan state di aplikasi web?**
+= *Cookies:*
+
+⦁	Kelebihan:
+
+      ⦁	Disimpan langsung di browser pengguna, jadi server tidak perlu banyak resource.
+   
+      ⦁	Bisa dipakai untuk menyimpan preferensi user (misalnya tema, bahasa) atau data sederhana lain.
+   
+      ⦁	Memungkinkan pengguna tetap login meskipun menutup browser (jika persistent cookie).
+   
+⦁	Kekurangan:
+
+      ⦁	Kurang aman karena data tersimpan di sisi klien, bisa dilihat atau dimodifikasi kalau tidak dienkripsi.
+   
+      ⦁	Tidak cocok untuk menyimpan data yang sensitif atau besar.
+
+*Sessions:*
+
+⦁	Kelebihan: 
+
+      ⦁	Lebih aman karena data utama disimpan di server, sementara di browser hanya ada session ID.
+
+      ⦁	Bisa menyimpan data lebih banyak dan lebih kompleks dibanding cookie.
+   
+      ⦁	Mendukung user-specific data yang berbeda tiap sesi login.
+
+⦁	Kekurangan:
+
+      ⦁	Membebani server karena harus menyimpan informasi session untuk banyak pengguna.
+   
+      ⦁	Biasanya hanya bertahan selama sesi browser atau sampai pengguna logout
+
+**4. Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai? Bagaimana Django menangani hal tersebut?**
+= Secara default, cookies tidak sepenuhnya aman. Ada beberapa risiko potensial, misalnya:
+
+⦁	Pencurian cookie (session hijacking) lewat serangan XSS (Cross-Site Scripting).
+
+⦁	Manipulasi cookie karena data ada di sisi klien, sehingga bisa diubah pengguna jika tidak divalidasi.
+Jadi, kalau cookies digunakan untuk menyimpan data penting (misalnya session login), harus ada perlindungan tambahan.
+
+Bagaimana Django menanganinya?
+
+⦁	CSRF token → Django otomatis me-generate token unik ke setiap form POST. Token ini diverifikasi server untuk mencegah Cross-Site Request Forgery, sehingga walaupun session ID ada di cookie, request membahayakan dari situs lain tidak bisa meng-clone user sah.
+
+⦁	Session framework → Django tidak menyimpan data langsung di cookie, melainkan hanya ID. Data sebenarnya tetap ada di server, jadi lebih aman.
+
+⦁	Session expiry & rotation → Django bisa otomatis menghapus session setelah waktu tertentu. Untuk mengurangi risiko session hijacking.
+
+**5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).**
+= 1. Pertama-tama, saya menambahkan import ``UserCreationForm`` dan ``messages`` pada bagian paling atas ``views.py``. ``UserCreationForm`` adalah impor formulir bawaan yang memudahkan pembuatan formulir pendaftaran user dalam aplikasi web.
+
+2. Kemudian di ``views.py`` saya menambahkan fungsi register. Fungsi ini berfungsi untuk menghasilkan formulir registrasi secara otomatis dan menghasilkan akun pengguna ketika data di-submit dari form.
+
+3. Kemudian, saya membuat berkas HTML baru dengan nama ``register.html`` agar nantinya muncul form register saat web dibuka.
+
+4. Selanjutnya, pada ``urls,py`` saya meng-import fungsi register dan menambahkan path url ke dalam urlpatterns untuk mengakses fungsi yang sudah di-import tadi (register).
+
+5. Buka ``views.py`` dan import ``authenticate``, ``login``, dan ``AuthenticationForm`` pada bagian paling atas. fungsi ``authenticate`` dan ``login`` yang di-import adalah fungsi bawaan Django yang dapat digunakan untuk melakukan autentikasi dan login (jika autentikasi berhasil).
+
+6. Menambahkan fungsi login_user ke dalam ``views.py`` yang berfungsi untuk autentikasi pengguna yang ingin login. Jika pengguna valid, fungsi ini akan membuat session untuk pengguna yang berhasil login.
+
+7. Membuat berkas HTML baru dengan nama ``login.html``. Nantinya di local akan muncul tampilan untuk user agar bisa login.
+
+8. Pada ``urls.py`` kita Kembali import fungsi login_user dan menambahkan path url ke dalam urlpatterns untuk mengakses fungsi login tadi.
+
+9. Menambahkan import ``logout`` bersamaan dengan ``authenticate`` dan ``login``.
+
+10. Menambahkan fungsi logout_user ke ``views.py`` agar user bisa melakukan mekanisme logout. Pada fungsi ``logout_user``, ``logout(request)`` digunakan untuk menghapus sesi pengguna yang saat ini masuk dan ``return redirect('main:login')`` mengarahkan pengguna ke halaman login dalam aplikasi Django.
+
+11. Selanjutnya, pada ``urls.py`` saya menambahkan import fungsi ``logout_user`` dan menambahkannya ke urlpatterns.
+
+12. Kemudian, menerapkan restriction dengan cara meng-import ``login_required`` di views.py. Merestriksi akses halaman tersebut berarti membatasi siapa saja yang boleh membuka halaman tersebut, misalnya hanya pengguna yang sudah login atau admin.
+
+13. Menambahkan kode ``@login_required(login_url='/login')`` di atas fungsi ``show_main`` dan ``show_product``, tujuannya agar halaman utama dan product detail hanya dapat diakses oleh pengguna yang sudah login (terautentikasi).
+
+14. Selanjutnya, pada views.py menambahkan ``HttpResponseRedirect, reverse, dan datetime``. Pada fungsi ``login_user`` tambahkan ``if form.is_valid()`` yang tujuannya agar kita bisa melihat timestamp terakhir kali user melakukan login. Agar last login muncul, maka kita tambahkan kode ``'last_login': request.COOKIES['last_login']`` ke dalam variable context di fungsi ``show_main``.
+
+15. Selain itu, saya juga mengubah fungsi `logout_user`` untuk menghapus cookie ``last_login`` setelah melakukan cookie dengan ``response.delete_cookie('last_login')``.
+
+16. Agar data waktu terakhir pengguna login tampil/muncul di web, maka saya menambahkan ``<h5>Sesi terakhir login: {{ last_login }}</h5>`` pada ``main.html``
+
+17. Selanjutnya, saya menghubungkan setiap object ``Product`` dengan pengguna yang membuatnya. Pada models.py saya mebambahkan kode ``user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)``. Dengan begitu, setiap user yang sedang login hanya dapat melihat product yang telah dibuat sendiri. 
+
+18. Karena melakukan perubahan pada ``models.py`` saya melakukan migrations. 
+
+19. Pada ``views.py`` saya menambahkan beberapa kode pada fungsi ``create_product``, misalnya parameter ``commit=False`` pada potongan kode digunakan agar Django tidak langsung menyimpan objek hasil form ke database. Dengan begitu, ada kesempatan untuk memodifikasi objek tersebut terlebih dahulu sebelum disimpan.
+
+20. Menerapkan ``filter_type`` pada ``show_main`` agar menampilkan halaman utama setelah user login dan dilengkapi dengan filter product berdasarkan penulis. Filter ini diambil dari query parameter ``filter`` pada URL, dengan dua opsi: "my" untuk menampilkan hanya product yang ditulis oleh user yang sedang login, dan "all" untuk menampilkan semua product. Setelah itu, tambahkan juga button my dan all di ``main.html``.
+
+21. Menambahkan kode agar nama author/yang meng-upload muncul di ``product_detail.html``. Informasi author merefleksikan pembuat artikel, bukan user yang sedang login.
+
+22. Runserver dan push ke PWS agar memastikan bahwa program berjalan dengan baik.  
+
+**Checklist nomor 2: Membuat dua (2) akun pengguna dengan masing-masing tiga (3) dummy data menggunakan model yang telah dibuat sebelumnya untuk setiap akun di lokal.**
+1. Akun 1: username -> spitfirerara
+   <img width="1909" height="1066" alt="Screenshot 2025-09-24 081823" src="https://github.com/user-attachments/assets/c08b5382-288b-4acb-a260-f23124c8d036" />
+   <img width="1919" height="1078" alt="Screenshot 2025-09-24 081934" src="https://github.com/user-attachments/assets/22af4191-a951-4bac-8f2b-aad23de4d05e" />
+   <img width="1911" height="946" alt="Screenshot 2025-09-24 080727" src="https://github.com/user-attachments/assets/b2c812fe-ae6a-4a7c-bf8d-3e383564b987" />
+   <img width="1912" height="957" alt="Screenshot 2025-09-24 080759" src="https://github.com/user-attachments/assets/baf78413-5097-4a82-9aeb-de126b197f01" />
+   <img width="1919" height="942" alt="Screenshot 2025-09-24 081749" src="https://github.com/user-attachments/assets/3fcb2bb0-3f15-4926-82a7-57c708b759ba" />
+
+2. Akun 2: username -> ILoveMihuMihu
+   <img width="1919" height="1079" alt="Screenshot 2025-09-24 084544" src="https://github.com/user-attachments/assets/af886759-6e44-48bf-a4b3-050378a018d2" />
+   <img width="1919" height="1079" alt="Screenshot 2025-09-24 084454" src="https://github.com/user-attachments/assets/39a9d021-2a86-46d5-a228-5854952115c5" />
+   <img width="1919" height="1012" alt="Screenshot 2025-09-24 082621" src="https://github.com/user-attachments/assets/b01bb467-1495-40c6-ade3-7ac6888d2969" />
+   <img width="1919" height="1077" alt="Screenshot 2025-09-24 084108" src="https://github.com/user-attachments/assets/2b3cfcfd-5164-4213-a2b6-3e8e141f78c6" />
+   <img width="1919" height="1065" alt="Screenshot 2025-09-24 084310" src="https://github.com/user-attachments/assets/f37abaca-372f-4a24-a88c-0c64b81e6c2c" />
+
+
+
+   
+
+
+
 
 
