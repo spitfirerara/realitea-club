@@ -1,0 +1,111 @@
+.form-style form input, form textarea, form select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid #bcbcbc;
+    border-radius: 0.375rem;
+}
+.form-style form input:focus, form textarea:focus, form select:focus {
+    outline: none;
+    border-color: #4D908E;
+    box-shadow: 0 0 0 3px #43AA8B;
+}
+
+.form-style input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    padding: 0;
+    border: 2px solid #d1d5db;
+    border-radius: 0.375rem;
+    background-color: white;
+    cursor: pointer;
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.form-style input[type="checkbox"]:checked {
+    background-color: #43AA8B;
+    border-color: #4D908E;
+}
+
+.form-style input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 0.875rem;
+}
+
+.form-style input[type="checkbox"]:focus {
+    outline: none;
+    border-color: #4D908E;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+.form-style button {
+    background-color: #43AA8B;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.form-style button:hover {
+    background-color: #4D908E;
+}
+
+.link-register,
+.link-register:link,
+.link-register:visited {
+  color: #43AA8B !important; 
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.link-register:hover,
+.link-register:active {
+  color: #4D908E !important; 
+
+}
+
+input[type="text"],
+input[type="number"],
+input[type="url"],
+textarea,
+select {
+  border: 2px solid #B5EAD7; /* Tosca soft */
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
+  transition: all 0.2s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus,
+textarea:focus,
+select:focus {
+  border-color: #4ECDC4; /* Tosca vibrant */
+  box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.3);
+  outline: none;
+}
+
+.btn-primary {
+  background-color: #43AA8B !important; 
+  color: white !important;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #4D908E !important; 
+
+}

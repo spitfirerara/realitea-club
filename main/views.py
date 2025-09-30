@@ -120,4 +120,45 @@ def logout_user(request):
     response.delete_cookie('last_login')
     return response
 
-   
+@login_required
+def edit_product(request, id):
+    product = get_object_or_404(Product, pk=id)
+    form = ProductForm(request.POST or None, instance=product)
+    if form.is_valid() and request.method == 'POST':
+        form.save()
+        return redirect('main:show_main')
+
+    context = {
+        'form': form
+    }
+
+    return render(request, "edit_product.html", context)
+
+@login_required
+def delete_product(request, id):
+    product = get_object_or_404(Product, pk=id)
+    product.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))
+
+from django.shortcuts import render
+from .models import Product
+
+def jersey(request):
+    products = Product.objects.filter(category="jersey")
+    return render(request, "category.html", {"products": products, "category": "Jersey"})
+
+def shoes(request):
+    products = Product.objects.filter(category="shoes")
+    return render(request, "category.html", {"products": products, "category": "Shoes"})
+
+def ball(request):
+    products = Product.objects.filter(category="ball")
+    return render(request, "category.html", {"products": products, "category": "Ball"})
+
+def accessory(request):
+    products = Product.objects.filter(category="accessory")
+    return render(request, "category.html", {"products": products, "category": "Accessory"})
+
+def other(request):
+    products = Product.objects.filter(category="other")
+    return render(request, "category.html", {"products": products, "category": "Other"})
