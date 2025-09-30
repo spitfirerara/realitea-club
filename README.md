@@ -9,6 +9,8 @@ Nama Project : Realitea Club
 
 Link PWS : https://naira-ammara-realiteaclub.pbp.cs.ui.ac.id/
 
+---
+
 ## Tugas Individu 2 PBP - Implementasi Model-View-Template (MVT) pada Django
 
 **1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).**
@@ -100,42 +102,61 @@ Link PWS : https://naira-ammara-realiteaclub.pbp.cs.ui.ac.id/
 
 = Menurut saya, penjelasan terkait tutorial 1 jelas, runtut, dan mudah dipahami. Dengan adanya tutorial 1, saya dengan lebih mudah mengerjakan tutorial 1 dan juga tugas individu 2. Tutorial 1 juga membantu saya memahami alur request-response dengan baik.
 
+---
 
 ## Tugas Individu 3 PBP
 **1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?**
+
 = Kita memerlukan data delivery dalam pengimplementasian sebuah platform karena data delivery memungkinkan developers untuk mengirim data dari server ke client dengan cepat dan efisien. Selain itu, data delivery memungkinkan batching, caching, pagination, dan penggunaan message queue untuk menangani beban besar tanpa memblokir request sinkron.
 
 Kemudian, data delivery menyediakan format terstandar (JSON, XML) agar pihak ketiga/layanan internal dapat mengonsumsi data dengan konsisten. Data delivery juga memisahkan penyajian data (API) dari rendering UI mempercepat development dan memungkinkan multiple clients (web, mobile).
 
 **2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih popular dibandingkan XML?**
+
 = Menurut saya, JSON lebih baik apabila dibandingkan dengan XML terutama saat saya mengerjakan tugas ke-3 PBP. Karena, dengan menggunakan JSON, menjadi lebih ringkas & ringan, lebih mudah dibaca manusia maupun mesin/computer, cepat diproses, dan sudah menjadi standar umum untuk pertukaran data pada web modern. Selain itu, JSON lebih fleksibel dibandingkan XML sehingga lebih banyak digunakan dalam pengembangan aplikasi saat ini.
 
 **3. Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?**
+
 = Fungsi method is_valid() pada form Django adalah untuk menjalankan proses validasi form dan mengembalikan dalam bentuk True/False. Method is_valid() akan mengembalikan nilai True saat data yang di-input user valid dan mengembalikan nilai False saat data yang di-input tidak valid.
 
 Mengapa dibutuhkan?
+
 - Mencegah penyimpanan data invalid, seperti typo, tipe data yang salah, dan lain-lain.
+  
 - Menyediakan feedback error/menampilkan pesan error ke user melalui form.errors jika data yang dimasukkan tidak valid.
 
 **4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?**
+
 = CSRF (Cross-Site Request Forgery) adalah serangan yang memaksa browser user yang sudah authenticated untuk mengirim request berbahaya ke aplikasi target. csrf_token penting saat membuat form di Django karena token ini unik per sesi/form dan diverifikasi server, sehingga mencegah request yang datang dari situs lain (forged request).
 
 Apabila kita tidak menambahkan csrf_token pada form Django, maka sangat besar kemungkinan terjadinya CSRF dan dapat membahayakan user yang sudah login melakukan aksi tanpa sadar, seperti mengubah password, menghapus data penting, dan lainnya. Oleh karena itu, penting bagi kita untuk selalu menambahkan csrf_token saat membuat form di Django agar data tersimpan dengan baik dan terhindar dari CSRF.
 
 **5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)**
+
 = • Pada direktori templates, saya membuat berkas HTML baru Bernama base.html yang berfungsi sebagai template dasar yang dapat digunakn sebagai kerangka umum untuk halaman web lainnya di dalam proyek.
+
 • Kemudian, pada settings.py di proyek realitea_club, pada bagian TEMPLATES saya menambahkan 'APP_DIRS': True,.
+
 • Membuat forms.py pada direktori main dan membuat fungsi create_product agar bisa menambahkan produk.
+
 • Selanjutnya, menambahkan fungsi show product berdasarkan product yang telah ditambahkan sebelumnya. Jika objek tidak ditemukan, akan mengembalikan halaman 404.
+
 • Kemudian, pada urls.py/main, saya mengimport fungsi-fungsi yang sudah dibuat dan menambahkan path url ke dalam variable urlpatterns.
+
 • Lalu, pada main/templates saya membuat 2 berkas HTML baru yaitu create_product.html dan product_detail.html. Pada create_product.html saya menambahkan {% csrf_token %} yang berfungsi sebagai security. Token ini di-generate secara otomatis oleh Django untuk mencegah serangan berbahaya.
+
 • Pada settings.py saya menambahkan CSRF_TRUSTED_ORIGINS dan menambahkan url deployment pws kita.
+
 • Kemudian pada views.py saya mengimport HttpResponse dan Serializer pada bagian paling atas.
+
 • Selanjutnya, saya menambahkan fungsi baru yang menerima parameter request yaitu def show_xml(request) dan def show_json(request)
+
 • Lalu, saya membuat 2 fungsi baru yang menerima parameter request dan product_id dengan nama show_xml_by_id dan show_json_by_id. Pada fungsi itu saya juga menambahkan return function berupa HttpResponse yang berisi parameter data hasil query yang sudah diserialisasi menjadi JSON atau XML dan parameter content_type dengan value "application/xml" (untuk format XML) atau "application/json" (untuk format JSON). Saya juga menambahkan try except untuk mengantisipasi kondisi ketika data dengan news_id tertentu tidak ditemukan dalam basis data. 
+
 • Terakhir, saya mengimport fungsi from main.views import show_main, create_product, show_product, show_xml, show_json, show_xml_by_id, show_json_by_id da urls.py dan menambahkan pada urlpaterns untuk mengakses fungsi yang sudah di-import.
 
 **6. Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?**
+
 = Menurut saya, penyampaian materi oleh asisten dosen pada tutorial 2 sudah jelas dan runtut sehingga mudah dipahami. Selain itu, penjelasan pada tutorial 2 dilengkapi dengan contoh dan penjelasan sehingga pengerjaan tutorial 2 dapat dengan lebih mudah dikerjakan.
 
 **7. Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman**
@@ -151,6 +172,8 @@ Screenshot Postman:
 
 • JSON ID
 <img width="1920" height="1080" alt="JSONPK png" src="https://github.com/user-attachments/assets/2b276ae5-3d0e-4b69-b06e-892d64decce8" />
+
+--- 
 
 ## Tugas Individu 4 PBP - Implementasi Autentikasi, Session, dan Cookies pada Django
 
@@ -295,9 +318,127 @@ Bagaimana Django menanganinya?
    <img width="1919" height="1077" alt="Screenshot 2025-09-24 084108" src="https://github.com/user-attachments/assets/2b3cfcfd-5164-4213-a2b6-3e8e141f78c6" />
    <img width="1919" height="1065" alt="Screenshot 2025-09-24 084310" src="https://github.com/user-attachments/assets/f37abaca-372f-4a24-a88c-0c64b81e6c2c" />
 
+---
 
+ ## Tugas Individu 5 PBP - Desain Web menggunakan HTML, CSS dan Framework CSS
 
+ **1.	Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!**
+
+= Dalam CSS, saat ada lebih dari satu selector yang mengatur properti untuk elemen yang sama, browser akan memilih aturan mana yang dipakai berdasarkan specificity (tingkat kekhususan selector) dan cascade (urutan aturan ditulis). Urutan prioritasnya adalah sebagai berikut:
+
+   1. **Inline style** (ditulis langsung di atribut HTML, misalnya ``<p style="color: red;">``) memiliki prioritas tertinggi dibandingkan semua selector lainnya.
+
+   2. **ID selector** (``#id-name {}``) lebih kuat daripada class, attribute, atau tag selector.
+
+   3. **Class selector, attribute selector, dan pseudo-class** (``.class {}``, ``[type="text"] {}``, ``:hover {}``) berada satu level di bawah ID.
+
+   4. **Element selector** (``div {}``, ``h1 {}``) dan pseudo-element (``::before``, ``::after``) memiliki prioritas paling rendah.
+
+Selain itu, jika dua selector memiliki tingkat specificity yang sama, maka aturan yang ditulis paling terakhir dalam CSS (atau yang terakhir dimuat di file CSS) yang akan dipakai, karena konsep cascading (mengalir ke bawah).
+
+**2.	Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!**
+
+= Responsive design adalah konsep/design yang membuat tampilan website bisa menyesuaikan ukuran layar, mulai dari laptop, tablet, sampai smartphone. Konsep ini penting karena:
+
+- Memudahkan user untuk mengakses website dari berbagai macam device
+- Dengan responsive design, layout otomatis berubah: teks tetap terbaca, tombol tetap mudah ditekan, dan gambar menyesuaikan ukuran layar.
+- Hal ini meningkatkan user experience dan mengurangi bounce rate (user cepat pergi dari website).
+- Responsive design juga membantu SEO, karena mesin pencari (seperti Google) mengutamakan website yang mobile-friendly.
+
+**Contoh aplikasi yang sudah menerapkan responsive design:**
+
+• Instagram web 
+Saat dibuka melalui desktop, foto ditampilkan dalam grid besar. Sedangkan di smartphone, tampilannya akan menjadi feed yang rapat ke bawah, navigasi juga lebih sederhana, dan tombol lebih besar agar mudah ditekan. Ini menunjukkan desainnya fleksibel.
+
+**Contoh aplikasi yang belum menerapkan responsive design:**
+
+• Beberapa website pemerintah lama (misalnya portal pelayanan lama) → Misal, saat dibuka di HP teks menjadi terlalu kecil, harus zoom in/out saat ingin membaca/menekan tombol, tombol tidak proporsional. Hal ini nantinya akan menghambat user saat menggunakannya.
+
+**3.	Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!**
+
+= Margin, border, dan padding adalah bagian dari CSS box model:
+
+   • Margin → area di luar border, memberi jarak antara elemen dengan elemen lain. Berguna untuk spacing antar card atau antar section.
+
+   • Border → garis tepi elemen, dapat diberi warna, ketebalan, atau bentuk (misalnya border-radius untuk melengkung).
+
+   • Padding → ruang di dalam border, memberi jarak antara konten (teks/gambar) dengan pinggiran kotaknya.
+
+      Contoh implementasi dalam CSS:
+      
+      ``.card {``
+      `` margin: 16px;                  /* jarak antar card */``
+      `` border: 2px solid #43AA8B;     /* garis hijau di sekeliling card */``
+      `` padding: 12px;                 /* jarak isi card dengan bordernya */``
+      ``}``
+
+**4.	Jelaskan konsep flex box dan grid layout beserta kegunaannya!**
+
+= **Flex box (Flexible Box Layout)**
+
+Flexbox adalah metode layout CSS yang dirancang untuk mengatur elemen dalam satu dimensi (horizontal atau vertical).
+
+   • Elemen utama (parent container) di-set dengan ``display: flex;``.
    
+   • Flex items bisa otomatis menyesuaikan ukuran dan posisi tergantung ruang kosong.
+   
+   • Dapat mengatur alignment dengan properti seperti:
+   
+   	• ``justify-content`` → mengatur posisi horizontal (misalnya: rata kiri, tengah, spasi di antara elemen).
+   
+   	• ``align-items`` → mengatur posisi vertical.
+   
+   	• ``flex-grow``, ``flex-shrink``, ``flex-basis`` → untuk kontrol ukuran dinamis item.
+
+**Kegunaan:**
+
+   • Cocok untuk membuat navbar yang elemen-elemennya bisa menyesuaikan layar.
+   
+   • Membuat daftar tombol / kartu produk dalam satu baris yang rapi.
+   
+   • Mmebuat layout responsif sederhana dengan cepat.
+
+**CSS Grid Layout**
+
+Grid adalah metode layout dua dimensi, artinya bisa mengatur elemen baik dalam baris maupun kolom secara bersamaan.
+
+   • Container utama di-set dengan ``display: grid;``
+   
+   • Menentukan baris dan kolom dengan ``grid-template-rows`` dan ``grid-template-columns``.
+   
+   • Elemen bisa ditempatkan di posisi tertentu menggunakan ``grid-row`` dan ``grid-column``.
+
+**Kegunaan:**
+
+   • Cocok untuk men-desain layout halaman penuh (misalnya: header, sidebar, content, footer).
+   
+   • Membuat galeri gambar atau card yang ukurannya rapi dalam baris & kolom.
+   
+   • Memberi kontrol presisi tinggi atas posisi tiap elemen di halaman.
+
+**5.	Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!**
+
+=  • Pertama-tama, saya menambahkan tailwind ke aplikasi saya untuk melakukan styling. Agar template Django saya dan tailwind terhubung, saya menambahkan script CDN tailwind di base.html
+
+• Selanjutnya, pada ``views.py``, saya menambahkan fungsi baru ``edit_product`` yang menerima parameter ``request`` dan ``id``. Agar nantinya pada website saya muncul fitur mengedit product, saya membuat file baru bernama ``edit_product.html``. Kemudian, saya melakukan routing dengan menambahkan path ``edit_product`` di ``urlpatterns`` pada file ``urls.py``.
+
+• Lalu, pada ``views.py``, saya menambahkan fungsi baru ``delete_product`` yang menerima parameter ``request`` dan ``id``. Agar nantinya pada website saya muncul fitur menghapus product. Kemudian, saya melakukan routing dengan menambahkan path ``delete_product`` di ``urlpatterns`` pada file ``urls.py``.
+
+• Kemudian menambahkan navigation bar pada aplikasi. Pada aplikasi saya, saya menempatkan navbar saya pada bagian atas. Saya mengisi navbar saya dengan: Home, Jersey, Shoes, Ball, Accessory, dan Other. Nantinya, user bisa dengan mudah mengakses kategori yang mereka inginkan.
+
+• Setelah itu, saya menambahkan global.css pada folder static. Agar style CSS yang ditambahkan di global.css tadi dapat digunakan dalam template Django, saya menambahkan file tersebut ke ``base.html``. Kemudian, pada ``global.css`` saya menyesuaikan warna untuk tampilan website, warna font, ukuran font, dan lain-lain agar tampilan website saya terlihat rapi dan mudah diakses di manapun
+
+• Selanjutnya, karena telah membuat navbar, saya menambahkan styling agar navbar menjadi lebih responsive dan menarik. Navbar pada aplikasi saya juga sudah menyesuaikan Ketika user membuka aplikasi pada desktop ataupun pada device lain seperti HP, tablet, dan lain-lain
+
+• Saya juga melakukan styling pada ``login.html``, ``register.html`` agar tampilan login & register lebih responsive. Diharapkan juga agar user menjadi lebih tertarik dalam melakukan register akun.
+
+• Selain itu, saya juga melakukan styling pada home page aplikasi saya agar tampilannya lebih menarik. Pada home, saya menampilkan card product, yang di mana user nantinya bisa melihat tampilanproduk nya secara mudah dan membaca deskripsi/detail dari setiap produk yang sudah tertera di home page. Kemudian, apabila user sudah login & menambahkan suatu product, maka user tersebut bisa meng-edit & menghapus product yang telah di-upload. Tombol edit & delete juga ditampilkan pada card product.
+
+• Selanjutnya, saya menambahkan ``no-product.png`` dan ``card_news,html`` ke dalam main.html`` agar nantinya saat belum ada product yang di-upload akan muncul gambar no-product di website, sedangkan saat sudah ada product yang di-upload, maka akan muncul dalam bentuk card product.
+
+• Lalu, saya melakukan styling pada ``product_detail.html``, ``edit_product.html``, ``create_product.html`` agar tampilannya lebih menarik dan tidak monoton.
+
+• Terakhir, untuk memastikan aplikasi dapat berjalan dan styling yang dilakukan sudah sesuai, saya menjalankan servernya dengan ``python manage.py runserver``.
 
 
 
