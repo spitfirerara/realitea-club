@@ -38,25 +38,33 @@
       {% endif %}
     </div>
 
-    <!-- Product Grid -->
-    {% if not product_list %}
-      <div class="bg-white rounded-lg border border-gray-200 p-12 text-center shadow-sm">
-        <div class="w-32 h-32 mx-auto mb-4">
-          <img src="{% static 'image/no-product.png' %}" alt="No product available" class="w-full h-full object-contain">
+ <!-- Product Grid -->
+    <div class="mb-4 flex items-center justify-between">
+      <div class="flex gap-2">
+        <button onclick="showModal('create')" class="px-4 py-2 bg-[#118AB2] text-white rounded-lg">+ Create (AJAX)</button>
+        <button onclick="refreshProducts()" class="px-4 py-2 border rounded-md">Refresh</button>
+      </div>
+    </div>
+
+    <div id="product-container" class="min-h-[200px]">
+      {# JS akan mengisi container ini. Sebagai fallback server-side, bisa tampilkan produk awal jika mau #}
+      {% if product_list %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {% for product in product_list %}
+            {% include 'card_product.html' with product=product %}
+          {% endfor %}
         </div>
-        <h3 class="text-lg font-medium text-[#073B4C] mb-2">No product found</h3>
-        <p class="text-[#577590] mb-6">Be the first to share new product to the community.</p>
-        <a href="{% url 'main:create_product' %}" class="inline-flex items-center px-4 py-2 bg-[#43AA8B] text-white rounded-md hover:bg-[#4D908E] transition-colors">
-          Create Product
-        </a>
-      </div>
-    {% else %}
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {% for product in product_list %}
-          {% include 'card_product.html' with product=product %}
-        {% endfor %}
-      </div>
-    {% endif %}
-  </div>
-</div>
+      {% else %}
+        <div class="bg-white rounded-lg border border-gray-200 p-12 text-center shadow-sm">
+          <div class="w-32 h-32 mx-auto mb-4">
+            <img src="{% static 'image/no-product.png' %}" alt="No product available" class="w-full h-full object-contain">
+          </div>
+          <h3 class="text-lg font-medium text-[#073B4C] mb-2">No product found</h3>
+          <p class="text-[#577590] mb-6">Be the first to share new product to the community.</p>
+          <a href="{% url 'main:create_product' %}" class="inline-flex items-center px-4 py-2 bg-[#43AA8B] text-white rounded-md hover:bg-[#4D908E] transition-colors">
+            Create Product
+          </a>
+        </div>
+      {% endif %}
+    </div>
 {% endblock content %}

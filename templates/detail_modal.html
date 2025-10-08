@@ -1,0 +1,20 @@
+<!-- Modal Detail Product -->
+<div id="detailModal" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50">
+  <div id="detailModalContent" class="bg-white rounded-lg shadow-lg w-11/12 sm:w-3/4 md:w-2/5 max-h-screen overflow-y-auto transition-all transform opacity-0 scale-95">
+    <div class="flex items-center justify-between p-4 border-b">
+      <h3 class="text-xl font-semibold text-gray-900" id="detail-title">Product Detail</h3>
+      <button type="button" class="text-gray-400 p-1.5" onclick="hideDetailModal()">✕</button>
+    </div>
+
+    <div id="detail-body" class="p-6 space-y-4">
+      <div class="w-full aspect-[16/9] bg-gray-100 flex items-center justify-center overflow-hidden rounded-md">
+        <img id="detail-thumbnail" src="" alt="Product Image" class="object-cover w-full h-full hidden">
+        <p id="detail-noimg" class="text-gray-400">No image</p>
+      </div>
+      <h4 class="text-lg font-bold text-[#073B4C]" id="detail-name"></h4>
+      <p class="text-[#118AB2] font-semibold" id="detail-price"></p>
+      <p class="text-sm text-gray-700 whitespace-pre-line" id="detail-description"></p>
+      <p class="text-xs text-gray-500" id="detail-category"></p>
+    </div>
+  </div>
+</div>

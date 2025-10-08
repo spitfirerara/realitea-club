@@ -1,0 +1,109 @@
+<div id="crudModal" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50">
+  <div id="crudModalContent" class="bg-white rounded-lg shadow-lg w-11/12 sm:w-3/4 md:w-2/5 max-h-screen overflow-y-auto p-0 transition-all transform opacity-0 scale-95">
+    <div class="flex items-center justify-between p-4 border-b">
+      <div>
+        <h3 id="modal-title" class="text-xl font-semibold text-gray-900">Create Product</h3>
+        <p id="modal-sub" class="text-sm text-gray-600 mt-1">Fill the form to add a new product</p>
+      </div>
+      <button type="button" class="text-gray-400 p-1.5" onclick="hideModal()">
+        ✕
+      </button>
+    </div>
+
+    <div class="px-6 py-4">
+      <form id="productForm">
+        <input type="hidden" id="product-id" name="product_id" />
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Name</label>
+          <input type="text" id="name" name="name" class="mt-1 block w-full border rounded-md px-3 py-2" required>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Price</label>
+          <input type="number" id="price" name="price" class="mt-1 block w-full border rounded-md px-3 py-2" required>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Description</label>
+          <textarea id="description" name="description" rows="3" class="mt-1 block w-full border rounded-md px-3 py-2"></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Thumbnail URL</label>
+          <input type="url" id="thumbnail" name="thumbnail" class="mt-1 block w-full border rounded-md px-3 py-2">
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Category</label>
+          <select id="category" name="category" class="mt-1 block w-full border rounded-md px-3 py-2">
+            <option value="">Choose a category</option>
+            <option value="jersey">Jersey</option>
+            <option value="shoes">Shoes</option>
+            <option value="ball">Ball</option>
+            <option value="accessory">Accessory</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-3">
+          <button type="button" onclick="hideModal()" class="px-4 py-2 border rounded-md">Cancel</button>
+          <button type="submit" id="modalSubmitBtn" class="px-4 py-2 bg-[#43AA8B] text-white rounded-md">Publish</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function showModal(mode='create', product=null) {
+  const modal = document.getElementById('crudModal');
+  const content = document.getElementById('crudModalContent');
+  const title = document.getElementById('modal-title');
+  const form = document.getElementById('productForm');
+
+  // reset
+  form.reset();
+  document.getElementById('product-id').value = '';
+
+  if (mode === 'create') {
+    title.textContent = 'Create Product';
+    document.getElementById('modalSubmitBtn').textContent = 'Publish';
+  } else {
+    title.textContent = 'Edit Product';
+    document.getElementById('modalSubmitBtn').textContent = 'Save';
+    if (product) {
+      document.getElementById('product-id').value = product.id || '';
+      document.getElementById('name').value = product.name || '';
+      document.getElementById('price').value = product.price || 0;
+      document.getElementById('description').value = product.description || '';
+      document.getElementById('thumbnail').value = product.thumbnail || '';
+      document.getElementById('category').value = product.category || '';
+    }
+  }
+
+  modal.classList.remove('hidden');
+  setTimeout(() => {
+    content.classList.remove('opacity-0','scale-95');
+    content.classList.add('opacity-100','scale-100');
+  }, 50);
+}
+
+function hideModal() {
+  const modal = document.getElementById('crudModal');
+  const content = document.getElementById('crudModalContent');
+  content.classList.remove('opacity-100','scale-100');
+  content.classList.add('opacity-0','scale-95');
+  setTimeout(()=> modal.classList.add('hidden'), 150);
+}
+
+// wire submit
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('productForm');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    window.submitProductForm(); // function defined in ajax_products.js
+  });
+});
+
+
+</script>

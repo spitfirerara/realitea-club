@@ -4,11 +4,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% block meta %} {% endblock meta %}
+    {% block meta %}{% endblock meta %}
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
   </head>
   <body>
-    {% block content %} {% endblock content %}
+    {% block content %}{% endblock content %}
+
+    {# === include global components === #}
+    {% include 'toast.html' %}
+    {% include 'modal.html' %}
+    {% include 'detail_modal.html' %}
+
+    {# === global scripts === #}
+    <script src="{% static 'js/toast.js' %}"></script>
+    <script src="{% static 'js/ajax_products.js' %}"></script>
+
+    {# === message toasts === #}
+    {% if messages %}
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      {% for message in messages %}
+        showToast(
+          "{{ message.tags|capfirst }}",
+          "{{ message|escapejs }}",
+          "{% if 'success' in message.tags %}success{% elif 'error' in message.tags %}error{% else %}normal{% endif %}"
+        );
+      {% endfor %}
+      });
+    </script>
+    {% endif %}
   </body>
 </html>
+
