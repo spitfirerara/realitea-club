@@ -1,6 +1,6 @@
 from django.urls import path
 from main import views
-
+from main.views import proxy_image, create_product_flutter
 app_name = 'main'
 
 urlpatterns = [
@@ -34,4 +34,8 @@ urlpatterns = [
     path('ball/', views.ball, name='ball'),
     path('accessory/', views.accessory, name='accessory'),
     path('other/', views.other, name='other'),
+
+    #TI 9
+    path('proxy-image/', proxy_image, name='proxy_image'),
+    path('create-product-flutter/', views.create_product_flutter, name='create_product_flutter'),
 ]
