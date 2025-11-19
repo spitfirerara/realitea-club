@@ -296,5 +296,5 @@ def create_product_flutter(request):
         product.save()
 
         return JsonResponse({"status": "success"}, status=200)
-
+    
     return JsonResponse({"status": "error"}, status=400)
